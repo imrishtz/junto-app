@@ -1,16 +1,30 @@
-import React from 'react';
-import {SafeAreaView, StyleSheet, Text, useColorScheme} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+    SafeAreaView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    useColorScheme,
+} from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
+
+import FullLogo from './assets/svgs/full_logo';
+import {Colors} from './src/constants';
 
 const App: React.FC = () => {
     const isDarkMode = useColorScheme() === 'dark';
-
+    useEffect(() => {
+        SplashScreen.hide();
+    });
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={{color: 'black'}}>
-                YO YO YO YOYOYO YOYO YO YO YO YOYOYO YOYOYO YO YO YOYOYO YOYOYO
-                YO YO YOYOYO YOYOYO YO YO YOYOYO YOYOYO YO YO YOYOYO YOYOYO YO
-                YO YOYOYO YOYOYO YO YO YOYOYO YOYO
-            </Text>
+            <StatusBar
+                translucent={true}
+                barStyle="dark-content"
+                backgroundColor={Colors.WHITE}
+            />
+            {/* <FullLogo /> */}
+            <Text>YO YO YO</Text>
         </SafeAreaView>
     );
 };
@@ -20,6 +34,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: Colors.WHITE,
     },
 });
 
