@@ -7,8 +7,8 @@ import {
     useColorScheme,
 } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
+import AppNavigation from './src/navigation/AppNavigation';
 
-import FullLogo from './assets/svgs/full_logo';
 import {Colors} from './src/constants';
 
 const App: React.FC = () => {
@@ -23,8 +23,7 @@ const App: React.FC = () => {
                 barStyle="dark-content"
                 backgroundColor={Colors.WHITE}
             />
-            {/* <FullLogo /> */}
-            <Text>YO YO YO</Text>
+            <AppNavigation />
         </SafeAreaView>
     );
 };
