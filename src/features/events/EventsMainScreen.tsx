@@ -1,12 +1,16 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-
-import LoginScreen from '../auth/LoginScreen';
+import {Text, View, Pressable} from 'react-native';
+import {useAppDispatch} from '../../state/hooks';
+import {logout} from '../auth/authSlice';
 
 const EventsMainScreen: React.FC = ({children}) => {
+    const dispatch = useAppDispatch();
     return (
         <View>
             <Text>EventsMain</Text>
+            <Pressable onPress={() => dispatch(logout())}>
+                <Text>logout</Text>
+            </Pressable>
         </View>
     );
 };

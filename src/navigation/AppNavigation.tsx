@@ -1,18 +1,51 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import SplashScreen from '../features/splash/SplashScreen';
+import SplashScreenLib from 'react-native-splash-screen';
 import LoginScreen from '../features/auth/LoginScreen';
 import EventsMainScreen from '../features/events/EventsMainScreen';
+import {useAppSelector} from '../state/hooks';
+import {useDispatch} from 'react-redux';
+import {loginAsync, setLoading} from '../features/auth/authSlice';
+
+export const SCREENS = {
+    SPLASH: 'SPLASH',
+    LOGIN: 'LOGIN',
+    EVENTS_MAIN: 'EVENTS_MAIN',
+};
+
 const Stack = createStackNavigator();
 
 const AppNavigation: React.FC = () => {
+    const isAuth = useAppSelector(state => state.auth.isAuth);
+    const isLoading = useAppSelector(state => state.auth.isLoading);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        SplashScreenLib.hide();
+        // dispatch(setLoading(false));
+        dispatch(loginAsync());
+    }, []);
+
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Splash">
-                <Stack.Screen name="Splash" component={SplashScreen} />
-                <Stack.Screen name="Login" component={LoginScreen} />
-                <Stack.Screen name="EventsMain" component={EventsMainScreen} />
+            <Stack.Navigator initialRouteName={SCREENS.SPLASH}>
+                {isLoading ? (
+                    <Stack.Screen
+                        name={SCREENS.SPLASH}
+                        component={SplashScreen}
+                    />
+                ) : isAuth ? (
+                    <Stack.Screen
+                        name={SCREENS.EVENTS_MAIN}
+                        component={EventsMainScreen}
+                    />
+                ) : (
+                    <Stack.Screen
+                        name={SCREENS.LOGIN}
+                        component={LoginScreen}
+                    />
+                )}
             </Stack.Navigator>
         </NavigationContainer>
     );

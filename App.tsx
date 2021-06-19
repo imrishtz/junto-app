@@ -6,16 +6,14 @@ import {
     Text,
     useColorScheme,
 } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
 import AppNavigation from './src/navigation/AppNavigation';
-
+import store from './src/state/store';
+import {Provider} from 'react-redux';
 import {Colors} from './src/constants';
 
 const App: React.FC = () => {
     const isDarkMode = useColorScheme() === 'dark';
-    useEffect(() => {
-        SplashScreen.hide();
-    });
+
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar
@@ -23,7 +21,9 @@ const App: React.FC = () => {
                 barStyle="dark-content"
                 backgroundColor={Colors.WHITE}
             />
-            <AppNavigation />
+            <Provider store={store}>
+                <AppNavigation />
+            </Provider>
         </SafeAreaView>
     );
 };
