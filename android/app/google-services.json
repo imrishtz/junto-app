@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "733478651550",
+    "firebase_url": "https://junto-events.firebaseio.com",
+    "project_id": "junto-events",
+    "storage_bucket": "junto-events.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733478651550:android:26d32924f8203c15111d8f",
+        "android_client_info": {
+          "package_name": "com.junto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733478651550-1403ehpnvm9ci7f15p901p38frog0q6u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.junto",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "733478651550-qo96bhaa5pmsqni9cp1n9ngjpqeokl9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASbQHf9ucbKPPt74hMYRxVz_3_Xem1C1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733478651550-qo96bhaa5pmsqni9cp1n9ngjpqeokl9r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "733478651550-7rr0sqg1trbvanjglhrm5rssue28kvao.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.cocoapods.Pods-doctorTS"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
