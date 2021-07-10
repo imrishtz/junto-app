@@ -1,27 +1,53 @@
+import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {loginApi} from '../../api/authApi';
-export const loginAsync = createAsyncThunk('auth/login', async () => {
-    const response = await loginApi();
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
-});
+import {User} from '../../models/user';
+import {
+    signInWithPhoneNumberRepo,
+    validatePhoneNumberCodeRepo,
+} from './repo/authRepo';
+export const signInWithPhoneNumberAsync = createAsyncThunk(
+    'auth/signInWithPhoneNumber',
+    async (phone: string) => {
+        const response = await signInWithPhoneNumberRepo(phone);
+        console.log('imri signInWithPhoneNumberAsync response', response);
+        // The value we return becomes the `fulfilled` action payload
+        return {response};
+    },
+);
+export const validatePhoneNumberCodeAsync = createAsyncThunk(
+    'auth/validatePhoneNumberCode',
+    async (code: string) => {
+        const response = await validatePhoneNumberCodeRepo(code);
+        console.log('imri signInWithPhoneNumberAsync response', response);
+        // The value we return becomes the `fulfilled` action payload
+        return response;
+    },
+);
+
+interface AuthState {
+    isPhoneConfirmation: boolean;
+    isAuth: boolean;
+    isLoading: boolean;
+    user?: User;
+}
+const initialState: AuthState = {
+    isPhoneConfirmation: false,
+    isAuth: false,
+    isLoading: true,
+    user: undefined,
+};
 
 export const authSlice = createSlice({
     name: 'auth',
-    initialState: {
-        isAuth: false,
-        isLoading: true,
-    },
+    initialState,
     reducers: {
-        login: state => {
-            // Redux Toolkit allows us to write "mutating" logic in reducers. It
-            // doesn't actually mutate the state because it uses the Immer library,
-            // which detects changes to a "draft state" and produces a brand new
-            // immutable state based off those changes
-            state.isAuth = true;
+        setPhoneConfirmation: (state, action) => {
+            state.isPhoneConfirmation = action.payload;
         },
         logout: state => {
             state.isAuth = false;
+            state.isPhoneConfirmation = false;
+            state.user = undefined;
         },
         setLoading: (state, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload;
@@ -29,17 +55,23 @@ export const authSlice = createSlice({
     },
     extraReducers: builder => {
         builder
-            .addCase(loginAsync.pending, state => {
-                state.isLoading = true;
+            .addCase(signInWithPhoneNumberAsync.fulfilled, (state, action) => {
+                state.isPhoneConfirmation = !!action.payload;
             })
-            .addCase(loginAsync.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.isAuth = true;
+            .addCase(signInWithPhoneNumberAsync.rejected, state => {
+                state.isPhoneConfirmation = false;
             });
+        builder.addCase(
+            validatePhoneNumberCodeAsync.fulfilled,
+            (state, action) => {
+                state.user = action.payload;
+                state.isAuth = action.payload !== null;
+            },
+        );
     },
 });
 
 // Action creators are generated for each case reducer function
-export const {login, logout, setLoading} = authSlice.actions;
+export const {logout, setLoading} = authSlice.actions;
 
 export default authSlice.reducer;

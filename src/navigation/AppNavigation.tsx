@@ -7,7 +7,9 @@ import LoginScreen from '../features/auth/LoginScreen';
 import EventsMainScreen from '../features/events/EventsMainScreen';
 import {useAppSelector} from '../state/hooks';
 import {useDispatch} from 'react-redux';
-import {loginAsync, setLoading} from '../features/auth/authSlice';
+import {setLoading} from '../features/auth/authSlice';
+import {JColors} from '../constants';
+import {View} from 'react-native';
 
 export const SCREENS = {
     SPLASH: 'SPLASH',
@@ -23,13 +25,16 @@ const AppNavigation: React.FC = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         SplashScreenLib.hide();
-        // dispatch(setLoading(false));
-        dispatch(loginAsync());
+        dispatch(setLoading(false));
     }, []);
 
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName={SCREENS.SPLASH}>
+            <Stack.Navigator
+                screenOptions={{
+                    headerShown: false,
+                }}
+                initialRouteName={SCREENS.SPLASH}>
                 {isLoading ? (
                     <Stack.Screen
                         name={SCREENS.SPLASH}
@@ -42,6 +47,9 @@ const AppNavigation: React.FC = () => {
                     />
                 ) : (
                     <Stack.Screen
+                        options={{
+                            title: 'Sign In',
+                        }}
                         name={SCREENS.LOGIN}
                         component={LoginScreen}
                     />

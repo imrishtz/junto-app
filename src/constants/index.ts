@@ -1,3 +1,3 @@
-import * as Colors from './colors';
+import * as JColors from './colors';
 
-export {Colors};
+export {JColors};

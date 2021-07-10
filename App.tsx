@@ -9,7 +9,8 @@ import {
 import AppNavigation from './src/navigation/AppNavigation';
 import store from './src/state/store';
 import {Provider} from 'react-redux';
-import {Colors} from './src/constants';
+import {JColors} from './src/constants';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const App: React.FC = () => {
     const isDarkMode = useColorScheme() === 'dark';
@@ -19,10 +20,12 @@ const App: React.FC = () => {
             <StatusBar
                 translucent={true}
                 barStyle="dark-content"
-                backgroundColor={Colors.WHITE}
+                backgroundColor={JColors.WHITE}
             />
             <Provider store={store}>
-                <AppNavigation />
+                <SafeAreaProvider>
+                    <AppNavigation />
+                </SafeAreaProvider>
             </Provider>
         </SafeAreaView>
     );
@@ -31,9 +34,7 @@ const App: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: Colors.WHITE,
+        backgroundColor: JColors.WHITE,
     },
 });
 
